@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автодополнение</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .suggestion-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Начните вводить фрукт...">
+        <div id="suggestions"></div>
+    </div>
+
+    <script>
+        const input = document.getElementById('search-input');
+        const suggestions = document.getElementById('suggestions');
+        let timeoutId;
+
+        input.addEventListener('input', async (e) => {
+            const prefix = e.target.value.trim();
+
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(async () => {
+                if (prefix.length >= 2) {
+                    const response = await fetch(`/autocomplete?prefix=${encodeURIComponent(prefix)}`);
+                    const words = await response.json();
+                    showSuggestions(words);
+                } else {
+                    suggestions.style.display = 'none';
+                }
+            }, 300);
+        });
+
+        function showSuggestions(words) {
+            suggestions.innerHTML = words.map(word => `
+                <div class="suggestion-item">${word}</div>
+            `).join('');
+
+            // Добавляем обработчики клика
+            document.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    input.value = item.textContent;
+                    suggestions.style.display = 'none';
+                });
+            });
+
+            suggestions.style.display = words.length ? 'block' : 'none';
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                suggestions.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

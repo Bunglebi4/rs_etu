@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Распределение пространства */
+            height: 400px; /* Фиксированная высота контейнера */
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .result-item {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #555;
+        }
+        .result-item strong {
+            color: #333;
+            font-weight: bold;
+        }
+        .back-button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            align-self: center; /* Центрирование кнопки */
+        }
+        .back-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1>Введенные данные</h1>
+            <div class="result-item">
+                <strong>Имя:</strong> {{ name }}
+            </div>
+            <div class="result-item">
+                <strong>Возраст:</strong> {{ age }}
+            </div>
+            <div class="result-item">
+                <strong>Email:</strong> {{ email }}
+            </div>
+            <div class="result-item">
+                <strong>Телефон:</strong> {{ phone }}
+            </div>
+        </div>
+        <button class="back-button" onclick="window.location.href='/'">Назад</button>
+    </div>
+</body>
+</html>

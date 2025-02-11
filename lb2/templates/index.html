@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Добро пожаловать в FastAPI!</h2>
+<p>Это главная страница приложения.</p>
+
+<!-- Сообщение об успешной регистрации -->
+{% if message %}
+<p style="color: green;">{{ message }}</p>
+{% endif %}
+
+<!-- Кнопки для перехода на страницы входа и регистрации -->
+<div class="buttons">
+    <a href="/register/" class="button">Регистрация</a>
+    <a href="/login/" class="button">Вход</a>
+</div>
+
+{% endblock %}
